@@ -1,0 +1,15 @@
+﻿@page "/RouteParameter/{text?}/{id:int?}"
+<h1>Blazor is @Text @Id times</h1>
+@code {
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Text = Text ?? "clever";
+        Id = Id ?? 1;
+        return base.OnInitializedAsync();
+    }
+}

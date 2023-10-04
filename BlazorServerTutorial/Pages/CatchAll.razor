@@ -1,0 +1,18 @@
+﻿@page "/catch-all/{*pageRoute}"
+<h3>CatchAll</h3>
+@foreach(var parameter in Parameters ?? Enumerable.Empty<string>())
+{
+    <h2>@parameter</h2>
+}
+
+@code {
+    [Parameter]
+    public string? PageRoute { get; set; }
+    [Parameter]
+    public dynamic? Parameters { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        Parameters = PageRoute?.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        return base.OnInitializedAsync();
+    }
+}

@@ -1,0 +1,33 @@
+﻿@page "/navigationmanager"
+@using Microsoft.Extensions.Logging
+@implements IDisposable
+@inject ILogger<NavigationManagerTest> Logger
+@inject NavigationManager NavigationManager
+
+<h3>NavigationManagerTest</h3>
+<button class="btn btn-primary" @onclick="NavigateToCounterComponent">
+    Go to Counter
+</button>
+@code {
+    private void NavigateToCounterComponent()
+    {
+        NavigationManager.NavigateTo("counter");
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        NavigationManager.LocationChanged -= HandleLocationChanged;
+        NavigationManager.LocationChanged += HandleLocationChanged;
+        return base.OnInitializedAsync();
+    }
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        Logger.LogInformation("URL of new location: {Location}", e.Location);
+    }
+
+    // dispose 를 통해 gac 에 components (this) 의 garbage 수집이 가능하도록 합니다.
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= HandleLocationChanged;
+    }
+}

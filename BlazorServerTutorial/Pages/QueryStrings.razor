@@ -1,0 +1,61 @@
+﻿@page "/querystrings"
+@inject NavigationManager NavigationManager
+<h3>QueryStrings</h3>
+<p>Filter : @Filter</p>
+<p>Page : @Page</p>
+@if(Stars is not null)
+{
+    <p>Assignees:</p>
+    <ul>
+        @foreach(var name in Stars)
+        {
+            <li>@name</li>
+        }
+    </ul>
+}
+
+<button class="btn btn-primary" @onclick="UpdateQueryString">
+    Update Filter=abcd
+</button>
+
+<button class="btn btn-primary" @onclick="UpdateQueryStrings">
+    UpdateQueryStrings  Filter2=abcd2  Filter3=1234
+</button>
+<p>수정된 querystring : @Data</p>
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Filter { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Page { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name ="star")]
+    public string[]? Stars { get; set; }
+
+    public string Data { get; set; } = string.Empty;
+    private void UpdateQueryString()
+    {
+        Data = NavigationManager.GetUriWithQueryParameter("Filter", "abcd");
+    }
+
+    private void UpdateQueryStrings()
+    {
+        var dic = new Dictionary<string, object?>()
+        {
+            {"Filter2", "abcd2"},
+            {"Filter3", 1234},
+
+        };
+
+        Data = NavigationManager.GetUriWithQueryParameters(dic);
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+}
