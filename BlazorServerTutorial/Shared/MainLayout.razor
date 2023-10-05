@@ -13,9 +13,17 @@
         </div>
 
         <article class="content px-4">
-            <ErrorBoundary>
+            <ErrorBoundary @ref="_errorBoundary">
                 @Body
             </ErrorBoundary>
         </article>
     </main>
 </div>
+
+@code{
+    private ErrorBoundary? _errorBoundary;
+    protected override void OnParametersSet()
+    {
+        _errorBoundary?.Recover();
+    }
+}

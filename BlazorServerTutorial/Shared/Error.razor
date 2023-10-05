@@ -1,0 +1,43 @@
+﻿@using Microsoft.Extensions.Logging
+@inject ILogger<Error> Logger
+
+<div>
+    @if (isErrorActive)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="HideError">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3>@title</h3>
+            <p>@message</p>
+        </div>
+    }
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    bool isErrorActive = false;
+    string title;
+    string message;
+
+    public void ProcessError(Exception ex)
+    {
+        string message = $"Error:ProcessError - Type: {ex.GetType()} Message: {ex.Message}";
+        Logger.LogError(message);
+
+        this.isErrorActive = true;
+        this.title = "Error:ProcessError";
+        this.message = message;
+        StateHasChanged();
+    }
+
+    private void HideError()
+    {
+        isErrorActive = false;
+    }
+}
