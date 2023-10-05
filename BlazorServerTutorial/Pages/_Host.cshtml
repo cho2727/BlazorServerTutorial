@@ -29,6 +29,14 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
+    @* <script src="_framework/blazor.server.js"></script> *@
+    <script src="_framework/blazor.server.js" autostart="false"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Blazor.start().then(function () {
+                console.log("!!!!!!!!!!DOMContentLoaded and BlazorStart!!!!!!!!!!");
+            });
+        });
+    </script>
 </body>
 </html>
