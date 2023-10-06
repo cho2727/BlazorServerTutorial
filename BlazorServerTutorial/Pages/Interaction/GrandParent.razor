@@ -1,0 +1,11 @@
+﻿@page "/interaction/cascadingparameter"
+<h3>GrandParent</h3>
+<CascadingValue Value="Data1">
+    <CascadingValue Value="Data2" Name="CascadeParam2">
+        <Parent />
+    </CascadingValue>
+</CascadingValue>
+@code {
+    public string Data1 { get; set; } = "data 1 from GrandParent";
+    public string Data2 { get; set; } = "data 2 from GrandParent";
+}

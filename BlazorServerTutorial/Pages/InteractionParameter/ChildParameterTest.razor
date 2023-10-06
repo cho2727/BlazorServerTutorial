@@ -1,0 +1,12 @@
+﻿@page "/InteractionParameter/childParameter/{inputparameter?}/{requiredinputparameter?}"
+<h3>Child</h3>
+<h1>@InputParameter</h1>
+<h1>@RequiredInputParameter</h1>
+@code {
+    [Parameter]
+    public string InputParameter { get; set; } = "Default Value";
+
+    [EditorRequired]
+    [Parameter]
+    public string? RequiredInputParameter { get; set; } = "";
+}

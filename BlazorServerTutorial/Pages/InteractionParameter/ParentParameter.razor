@@ -1,0 +1,17 @@
+﻿@page "/InteractionParameter/parameters"
+<div>
+    <h3>Parent</h3>
+    <ChildParameter RequiredInputParameter=@SecondData />
+    <p />
+    <ChildParameter InputParameter=@FirstData RequiredInputParameter=@SecondData />
+</div>
+<button @onclick="OnChangeParameter">changed parameter</button>
+@code {
+    public string FirstData { get; set; } = "First Data";
+    public string SecondData { get; set; } = "Second Data";
+    private int count = 0;
+    public void OnChangeParameter()
+    {
+        FirstData = $"{++count} changed first data";
+    }
+}

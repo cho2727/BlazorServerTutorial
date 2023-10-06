@@ -1,0 +1,10 @@
+﻿<h3>Parent</h3>
+<div>data1 Received value at grand parent: <span class="text-danger">@ReceivedData1</span></div>
+<div>data2 Received value at grand parent: <span class="text-danger">@ReceivedData2</span></div>
+<Child />
+@code {
+    [CascadingParameter]
+    public string ReceivedData1 { get; set; } = "";
+    [CascadingParameter(Name = "CascadeParam2")]
+    public string ReceivedData2 { get; set; } = "";
+}
