@@ -10,8 +10,8 @@
     [Parameter]
     public string? RequiredInputParameter { get; set; } = "";
 
-    // protected override void OnParametersSet()
-    // {
-    //     JSRuntime.InvokeVoidAsync("alert", $"ParameterChanged");
-    // }
+    protected override void OnParametersSet()
+    {
+        JSRuntime.InvokeVoidAsync("alert", $"ParameterChanged");
+    }
 }

@@ -1,0 +1,14 @@
+﻿@page "/interactionparameter/parent"
+<h3>Parent</h3>
+<div><span class="text-danger">@FirstData</span></div>
+<ChildParameterChange InputParameter=@FirstData ChildValueChanged="OnChildValueChanged" />
+@code {
+    public string FirstData { get; set; } = "First Data";
+    public string SecondData { get; set; } = "Second Data";
+
+    public void OnChildValueChanged(string data)
+    {
+        FirstData = data;
+        StateHasChanged();
+    }
+}

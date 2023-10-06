@@ -1,0 +1,22 @@
+﻿@inject IJSRuntime JSRuntime
+<h3>Child</h3>
+<h1>@InputParameter</h1>
+<button @onclick="UpdateValue">Changed parameter in child</button>
+@code {
+    [Parameter]
+    public string InputParameter { get; set; } = "Default Value";
+
+    [Parameter]
+    public Action<string> ChildValueChanged { get; set; } = _ => { };
+
+    public void UpdateValue()
+    {
+        InputParameter = "changed default value";
+        ChildValueChanged?.Invoke(InputParameter);
+    }
+
+    // protected override void OnParametersSet()
+    // {
+    //     JSRuntime.InvokeVoidAsync("alert", $"ParameterChanged");
+    // }
+}
