@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+<header>
+    <h1>MyLayout</h1>
+</header>
+
+<nav>
+    <a href="">Home</a>
+    <a href="counter">Counter</a>
+    <a href="fetchdata">Fetch data</a>
+</nav>
+@Body
+<footer>
+    @Message
+</footer>
+@code{
+    public string Message { get; set; } = "It is MyLayout.razor";
+}

@@ -1,0 +1,23 @@
+﻿@page "/components/lifecycle/initialize-dispose"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+<h3>Initialize And Dispose</h3>
+<div>Initialize Value: @Text</div>
+
+@code {
+    public string Text { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        Text = "OnInitialized";
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+    public void OnLocationChanged(object? sender, LocationChangedEventArgs eventArgs) => JSRuntime.InvokeVoidAsync("alert", "page moving");
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+        JSRuntime.InvokeVoidAsync("console.log", "Dispose page and unsubscribe handler");
+    }
+}

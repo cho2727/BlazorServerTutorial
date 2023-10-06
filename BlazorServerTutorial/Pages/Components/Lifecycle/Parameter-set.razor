@@ -1,0 +1,21 @@
+﻿@page "/components/lifecycle/parameter-set/{ParamText?}"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
+<h3>ParametersSet</h3>
+<div>Parameter Value: @ParamText</div>
+
+@code {
+    [Parameter]
+    public string? ParamText { get; set; } = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? QueryText { get; set; } = "";
+
+    protected override void OnParametersSet()
+    {
+        JSRuntime.InvokeVoidAsync("alert", $"parameter set : ParamText = {ParamText} , QueryText={QueryText}");
+        base.OnParametersSet();
+    }
+}

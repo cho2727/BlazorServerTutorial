@@ -1,0 +1,12 @@
+﻿@page "/components/lifecycle/after-render"
+@inject IJSRuntime JSRuntime
+
+<h3>AfterRender</h3>
+<button class="btn btn-primary" @onclick="StateHasChanged">Trigger AfterRender</button>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("alert", $"it is firstRender = {firstRender}");
+    }
+}
