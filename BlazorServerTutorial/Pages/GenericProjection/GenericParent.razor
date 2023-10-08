@@ -1,0 +1,22 @@
+﻿@page "/generic-projection"
+@using BlazorServerTutorial.Data;
+<div class="border border-3 border-primary p-3">
+    <h3>GenericParent</h3>
+    <GenericChild InputData="Persons" Context="OutputFromProjection">
+        <TeacherTemplate>
+            <div>My name is @OutputFromProjection.Name, I am a teacher.</div>
+        </TeacherTemplate>
+        <StudentTemplate>
+            <div>My name is @OutputFromProjection.Name, I am a student.</div>
+        </StudentTemplate>
+    </GenericChild>
+</div>
+
+@code {
+    public List<IPerson> Persons { get; set; } = new()
+    {
+        new Teacher() { Name = "Space Rich King" },
+        new Student() { Name = "World Rich King" },
+        new Student() { Name = "Musk" },
+    };
+}

@@ -1,0 +1,30 @@
+﻿@using BlazorServerTutorial.Data
+
+<div class="border border-success border-3 p-3">
+    <h3>Child</h3>
+    @foreach (var item in InputData)
+    {
+        <div class="border border-3 border-warning p-3 my-3">
+
+            @if (item is Teacher dog)
+            {
+                @TeacherTemplate?.Invoke(dog)
+            }
+            @if (item is Student student)
+            {
+                @StudentTemplate?.Invoke(student)
+            }
+
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment<Teacher>? TeacherTemplate { get; set; }
+    [Parameter]
+    public RenderFragment<Student>? StudentTemplate { get; set; }
+
+    [Parameter]
+    public List<IPerson> InputData { get; set; } = new();
+}
