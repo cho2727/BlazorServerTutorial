@@ -1,0 +1,28 @@
+﻿@page "/load-collocate-js"
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<h3>LoadOnDemand</h3>
+
+@code {
+    private Lazy<IJSObjectReference> CollocateJSModule = new();
+    private Lazy<IJSObjectReference> CollocateJSModuleInstance = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            CollocateJSModule = new(await JS.InvokeAsync<IJSObjectReference>("import", "./Pages/LoadOnDemand.razor.js"));
+            CollocateJSModuleInstance = new(await CollocateJSModule.Value.InvokeAsync<IJSObjectReference>("CollocatedJsInstance"));
+            await CollocateJSModuleInstance.Value.InvokeVoidAsync("CollocateFunction");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (CollocateJSModule.IsValueCreated)
+        {
+            await CollocateJSModule.Value.DisposeAsync();
+            await CollocateJSModuleInstance.Value.DisposeAsync();
+        }
+    }
+}
