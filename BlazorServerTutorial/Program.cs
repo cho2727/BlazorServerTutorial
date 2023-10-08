@@ -11,6 +11,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddHttpClient();
 //builder.Services.AddSingleton<TestInject>();
 builder.Services.AddTransient<TestInject>();
+builder.Services.AddScoped<TransferService>();
+//builder.Services.AddSingleton<TransferService>();
 
 var app = builder.Build();
 

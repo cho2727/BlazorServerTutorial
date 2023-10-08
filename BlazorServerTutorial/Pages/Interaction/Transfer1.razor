@@ -1,0 +1,54 @@
+﻿@using Data
+@using System.Collections.Specialized
+@inject TransferService TransferService
+@implements IDisposable
+
+
+<div class="border border-link-success border-3 p-3">
+    <h3>Transfer 1</h3>
+    <div class="card">
+        <div class="card-body">
+            <div>Received Data: <span class="text-danger">@TransferService.Data</span></div>
+            <label><input type="text" @bind="TransferService.Data" @bind:event="oninput" /></label>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div>Number of instances: <span class="text-danger">@TransferService.Instances.Count</span></div>
+            <button class="btn btn-primary" type="button" @onclick="AddInstance">Add Instance</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        TransferService.Instances.CollectionChanged += OnCollectionChanged;
+        TransferService.DataChanged += OnDataChanged;
+    }
+
+    public void AddInstance()
+    {
+        TransferService.Instances.Add(new()
+            {
+                Data = "New instance"
+            });
+    }
+
+    public void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void OnDataChanged(object? sender, string value)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        TransferService.Instances.CollectionChanged -= OnCollectionChanged;
+        TransferService.DataChanged -= OnDataChanged;
+    }
+}

@@ -1,0 +1,25 @@
+﻿<div>
+    <h3>MultipleChild</h3>
+    <header>
+        <h1 style="color:red"><b>@HeaderContent</b></h1>
+    </header>
+    <div>
+        <h1 style="color:blue">@BodyContent</h1>
+        <h3 style="color:blue">@ChoContent</h3>
+    </div>
+    <footer>
+        <h3 style="color:yellow">@FooterContent</h3>
+    </footer>
+</div>
+@code {
+
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; }
+    [Parameter]
+    public RenderFragment? BodyContent { get; set; }
+    [Parameter]
+    public RenderFragment? FooterContent { get; set; }
+    [Parameter]
+    public RenderFragment? ChoContent { get; set; }
+
+}
