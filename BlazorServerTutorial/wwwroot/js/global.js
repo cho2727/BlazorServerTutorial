@@ -25,3 +25,8 @@ function dynamicTypeResult() {
 
     return 1;
 }
+
+async function callStaticLocalComponentMethod() {
+    const data = await DotNet.invokeMethodAsync("BlazorServerTutorial", "StaticMethod");
+    alert(data);
+} 

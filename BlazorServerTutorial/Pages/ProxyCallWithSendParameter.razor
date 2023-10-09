@@ -1,0 +1,37 @@
+﻿@page "/call/proxy/send-parameter"
+@using BlazorServerTutorial.Data
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+<button @onclick="CallFunction">Call by Primitive Type</button>
+<button @onclick="CallFunction2">Call by Reference Type</button>
+
+@code {
+    private Lazy<IJSObjectReference> Module = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Module = new(await JS.InvokeAsync<IJSObjectReference>("import", "./js/callByModule.js"));
+        }
+    }
+    public async Task CallFunction()
+    {
+        var passObject = new CSharpObject();
+        var refObject = DotNetObjectReference.Create<CSharpObject>(passObject);
+        await Module.Value.InvokeVoidAsync("callPrimitiveParameterizedCSharpMethod", refObject);
+        refObject?.Dispose();
+    }
+
+    public async Task CallFunction2()
+    {
+        var passObject = new CSharpObject();
+        var refObject = DotNetObjectReference.Create<CSharpObject>(passObject);
+        await Module.Value.InvokeVoidAsync("callReferenceParameterizedCSharpMethod", refObject);
+        refObject?.Dispose();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await Module.Value.DisposeAsync();
+    }
+}

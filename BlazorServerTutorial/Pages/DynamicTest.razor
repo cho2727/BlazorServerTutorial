@@ -1,0 +1,31 @@
+﻿@page "/dynamic-component"
+
+<PageTitle>dynamic-component</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col col-md-4 offset-md-3">
+            <select class="form-select" aria-label="Default select example" @onchange="OnComponentSelect">
+                <option value="">-Select-</option>
+                <option value="@(nameof(Counter))">Counter Component</option>
+                <option value="@(nameof(FetchData))">Fetch Data Component</option>
+            </select>
+        </div>
+    </div>
+    <div class="col mt-4">
+        @if (selectedComponent != null)
+        {
+            <DynamicComponent Type="@selectedComponent"></DynamicComponent>
+        }
+    </div>
+</div>
+<h1><span class="text-danger">it is dynamic component test</span></h1>
+
+@code {
+    private Type? selectedComponent;
+    private void OnComponentSelect(ChangeEventArgs e)
+    {
+        selectedComponent = e?.Value?.ToString()?.Length > 0 ?
+        Type.GetType($"BlazorServerTutorial.Pages.{e.Value}") : null;
+    }
+}
