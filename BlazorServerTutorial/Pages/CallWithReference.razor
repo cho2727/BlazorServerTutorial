@@ -1,0 +1,37 @@
+﻿@page "/call/with-reference"
+@using BlazorServerTutorial.Data;
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<button @onclick="CallFunction">pass parameter to function</button>
+<h3>CallWithParameter</h3>
+
+@code {
+    private Lazy<IJSObjectReference> Module = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            Module = new(await JS.InvokeAsync<IJSObjectReference>("import", "./js/callByModule.js"));
+        }
+    }
+
+    public async Task CallFunction()
+    {
+        var passObject = new CSharpObject()
+        {
+            Name = "나야 나",
+            Age = 100,
+            BirthDate = DateTime.Now
+        };
+
+        var refObject = DotNetObjectReference.Create<CSharpObject>(passObject);
+
+        await Module.Value.InvokeVoidAsync("callWithReferenceParameter", refObject);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await Module.Value.DisposeAsync();
+    }
+}

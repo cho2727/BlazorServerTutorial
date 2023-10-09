@@ -1,0 +1,25 @@
+﻿@page "/call/module-javascript-function"
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+<button @onclick="CallFunction">Call Module JavaScript Function</button>
+<h3>CallModuleJavaScriptFunction</h3>
+
+@code {
+    private Lazy<IJSObjectReference> IsolatedModule = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            IsolatedModule = new(await JS.InvokeAsync<IJSObjectReference>("import", "./js/isolate.js"));
+        }
+    }
+    public async Task CallFunction()
+    {
+        await IsolatedModule.Value.InvokeVoidAsync("exampleFunction");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await IsolatedModule.Value.DisposeAsync();
+    }
+}

@@ -1,0 +1,27 @@
+﻿@page "/call/pass-parameter"
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<button @onclick="CallFunction">pass parameter</button>
+<h3>CallWithParameter</h3>
+
+@code {
+    private Lazy<IJSObjectReference> Module = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            Module = new(await JS.InvokeAsync<IJSObjectReference>("import", "./js/callByModule.js"));
+        }
+    }
+
+    public async Task CallFunction()
+    {
+        await Module.Value.InvokeVoidAsync("callWithPrimitiveParameters", "111111", 1235, DateTime.Now);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await Module.Value.DisposeAsync();
+    }
+}

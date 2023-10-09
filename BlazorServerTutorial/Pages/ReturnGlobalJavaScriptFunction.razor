@@ -1,0 +1,18 @@
+﻿@page "/call/return-javascript-function"
+@inject IJSRuntime JS
+<button @onclick="CallStaticType">return Static Type Function</button>
+<button @onclick="CallDynamicType">return dynamic Type Function</button>
+<h1><span class="text-danger">@Data</span></h1>
+
+@code {
+    private dynamic Data { get; set; } = "";
+    public async Task CallStaticType()
+    {
+        Data = await JS.InvokeAsync<string>("staticResult");
+    }
+
+    public async Task CallDynamicType()
+    {
+        Data = await JS.InvokeAsync<dynamic>("dynamicTypeResult");
+    }
+}

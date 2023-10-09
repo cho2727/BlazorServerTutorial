@@ -1,0 +1,11 @@
+﻿@page "/call/global-javascript-function"
+@inject IJSRuntime JS
+<button @onclick="CallFunction">Call Global JavaScript Function</button>
+<h3>CallGlobalJavaScriptFunction</h3>
+
+@code {
+    public async Task CallFunction()
+    {
+        await JS.InvokeVoidAsync("exampleFunction");
+    }
+}
