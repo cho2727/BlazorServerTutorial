@@ -1,0 +1,25 @@
+﻿@page "/unparseable-values"
+
+<p>
+    <input @bind="inputValue" @bind:event="oninput" />
+</p>
+<p>
+    <label>
+        <code>yyyy-MM-dd</code> format:
+        <input @bind="strDate" @bind:format="yyyy-MM-dd" />
+    </label>
+</p>
+
+<p>
+    <code>inputValue</code>: @inputValue
+</p>
+
+
+<p>
+    <code>strDate</code>: @strDate
+</p>
+
+@code {
+    private int inputValue = 123;
+    private DateTime strDate = new(2023, 10, 10);
+}

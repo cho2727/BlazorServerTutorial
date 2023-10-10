@@ -1,0 +1,23 @@
+﻿@page "/binding/Parent"
+
+<h1>Parent Component</h1>
+
+<p>Parent <code>year</code>: @year</p>
+<p>Parent <code>Day</code>: @day</p>
+
+<button @onclick="UpdateYear">Update Parent <code>year</code></button>
+
+<ChildBinding @bind-Year="year"/>
+@* <ChildBinding @bind-Year="year" @bind-Year:event="YearChanged" /> *@
+
+@code {
+    private Random r = new();
+    private int year = 1979;
+    private int day = 1;
+
+    private void UpdateYear()
+    {
+        year = r.Next(1950, 2021);
+        day = r.Next(1, 30);
+    }
+}

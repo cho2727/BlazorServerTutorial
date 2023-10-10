@@ -1,0 +1,9 @@
+﻿@page "/event-handler-lamda"
+<h3>@heading</h3>
+<p>
+    <button @onclick="@(e => heading = "new2 heading!!!")">Update Heading</button>
+</p>
+
+@code {
+    private string heading = "Initial heading";
+}

@@ -1,0 +1,26 @@
+﻿@page "/event-handler-example-3"
+<div @onclick="ReportPointerLocation"
+    @oncut="ClipboardAction"
+    @oncopy="ClipboardAction"
+    @onpaste="ClipboardAction"
+    style="height:500px;background-color: blue">
+    ㅋㅋㅋ
+</div>
+
+<p>@mousePointerMessage</p>
+<p>@clipboardMessage</p>
+
+@code {
+    private string? mousePointerMessage;
+    private string? clipboardMessage;
+
+    private void ReportPointerLocation(MouseEventArgs e)
+    {
+        mousePointerMessage = $"Mouse coordinates: {e.ScreenX}:{e.ScreenY}";
+    }
+
+    private void ClipboardAction(ClipboardEventArgs e)
+    {
+        clipboardMessage = $"Clipboard:{e.Type}";
+    }
+}

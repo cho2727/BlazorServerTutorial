@@ -1,0 +1,32 @@
+﻿@page "/custom-paste-arguments"
+@using BlazorServerTutorial.Data
+<div @oncustompaste="HandleCustomPaste" style="height:500px;background-color: ivory">
+    >
+    <label>
+        Try pasting into the following text box:
+    </label>
+    @foreach (var image in images)
+    {
+        <img style="width: 150px; margin-right: 1rem; margin-top: 1rem" src="@image" />
+    }
+</div>
+
+<p>
+    @message
+</p>
+
+@code {
+    private string? message;
+    private List<string> images = new List<string>();
+
+    private void HandleCustomPaste(CustomPasteEventArgs eventArgs)
+    {
+        message = $"At {eventArgs.EventTimestamp.ToShortTimeString()}, " +
+            $"you pasted: {eventArgs.PastedData}";
+
+        if (eventArgs.IsMultimedia)
+        {
+            images.Add(eventArgs.PastedData ?? string.Empty);
+        }
+    }
+}

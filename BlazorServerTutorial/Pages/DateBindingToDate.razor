@@ -1,0 +1,16 @@
+﻿@page "/date-bindig/date"
+
+<p>
+    <label>
+        <code>yyyy-MM-dd</code> format:
+        <input type="date" @bind="strDate" @bind:format="yyyy-MM-dd" />
+    </label>
+</p>
+
+<p>
+    <code>strDate</code>: @strDate
+</p>
+
+@code {
+    private DateTime strDate = new(2023, 10, 10);
+}

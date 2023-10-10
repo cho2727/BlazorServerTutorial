@@ -1,0 +1,25 @@
+﻿@page "/event/focus"
+
+<p>
+    <span>Name : </span><input @ref="nameInput" />
+    <span>Age : </span><input @ref="ageInput" />
+</p>
+
+<button @onclick='()=>ChangeFocus("N")'>
+    Focus the Name Element
+</button>
+<button @onclick='()=>ChangeFocus("A")'>
+    Focus the Age Element
+</button>
+@code {
+    private ElementReference nameInput;
+    private ElementReference ageInput;
+
+    private async Task ChangeFocus(string reference)
+    {
+        if (reference == "A")
+            await ageInput.FocusAsync();
+        else
+            await nameInput.FocusAsync();
+    }
+}
